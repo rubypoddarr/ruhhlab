@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}About — RuhhLab{% endblock %}
+
+{% block content %}
+<section class="about-section">
+    <div class="about-hero">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="about-header">
+            <span class="section-badge">The Story</span>
+            <h1 class="section-title">About RuhhLab</h1>
+        </div>
+    </div>
+
+    <div class="about-layout">
+        <div class="about-profile glass-card">
+            <div class="profile-image-wrap">
+                <img src="{{ url_for('static', filename='images/ruby.jpg') }}" alt="Ruby Poddar" class="profile-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="profile-placeholder" style="display:none;">
+                    <span>RP</span>
+                </div>
+            </div>
+            <div class="profile-info">
+                <h2 class="profile-name">Ruby Poddar</h2>
+                <p class="profile-role">Final Year BCA · Data Science</p>
+                <p class="profile-uni">
+                    <img src="{{ url_for('static', filename='images/amity-logo.png') }}" alt="Amity University" class="uni-logo" onerror="this.style.display='none'">
+                    Amity University
+                </p>
+                <a href="mailto:rubypoddarrr@gmail.com" class="profile-email">rubypoddarrr@gmail.com</a>
+            </div>
+        </div>
+
+        <div class="about-story">
+            <div class="story-card glass-card">
+                <h3>The Project</h3>
+                <p>
+                    RuhhLab is my final year project for BCA in Data Science at Amity University. The idea came from my deep interest in Computer Vision and Artificial Intelligence — fields that I believe are reshaping how machines understand the world around them.
+                </p>
+                <p>
+                    While studying computer vision systems, I explored multiple research papers and open-source projects, which inspired me to build my own intelligent image understanding system. Instead of relying on cloud APIs or heavyweight frameworks, I wanted to prove that production-grade AI pipelines could run entirely on a local machine.
+                </p>
+            </div>
+
+            <div class="story-card glass-card">
+                <h3>The Journey</h3>
+                <p>
+                    This journey was not easy. I faced multiple errors, dependency conflicts, deployment failures, and system crashes along the way. Getting YOLOv8n to run reliably in a CPU-only environment without bloating the build size was a challenge that required days of iteration and research.
+                </p>
+                <p>
+                    However, I continued improving the project step by step — debugging, refactoring, testing, and refining. Every error taught me something new. Every crash made the final system more resilient.
+                </p>
+            </div>
+
+            <div class="story-card glass-card">
+                <h3>What This Means</h3>
+                <p>
+                    RuhhLab represents my learning journey, persistence, and passion for AI systems. Even when things broke — and they broke often — I never gave up. This project is proof that lightweight, production-ready AI doesn't require a data center or a GPU farm.
+                </p>
+                <p>
+                    It's a system I built from scratch, understand completely, and am proud to put my name on.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tech-section">
+        <div class="section-header">
+            <span class="section-badge">Technology</span>
+            <h2 class="section-title">Stack Used</h2>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-card glass-card">
+                <span class="tech-icon">🐍</span>
+                <span class="tech-name">Python 3.10+</span>
+                <span class="tech-desc">Core language</span>
+            </div>
+            <div class="tech-card glass-card">
+                <span class="tech-icon">⚗️</span>
+                <span class="tech-name">Flask</span>
+                <span class="tech-desc">Web framework</span>
+            </div>
+            <div class="tech-card glass-card">
+                <span class="tech-icon">⚡</span>
+                <span class="tech-name">YOLOv8n</span>
+                <span class="tech-desc">Object detection</span>
+            </div>
+            <div class="tech-card glass-card">
+                <span class="tech-icon">👁️</span>
+                <span class="tech-name">OpenCV</span>
+                <span class="tech-desc">Image processing</span>
+            </div>
+            <div class="tech-card glass-card">
+                <span class="tech-icon">🔢</span>
+                <span class="tech-name">NumPy</span>
+                <span class="tech-desc">Math operations</span>
+            </div>
+            <div class="tech-card glass-card">
+                <span class="tech-icon">🖼️</span>
+                <span class="tech-name">Pillow</span>
+                <span class="tech-desc">Image handling</span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

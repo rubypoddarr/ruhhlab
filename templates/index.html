@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Analyze Image — RuhhLab{% endblock %}
+
+{% block content %}
+<section class="analyze-section">
+    <div class="analyze-header">
+        <span class="section-badge">Vision Engine</span>
+        <h1 class="section-title">Analyze Your Image</h1>
+        <p class="section-sub">Upload any image and the YOLOv8n pipeline will detect objects, interpret the scene, and generate structured AI output.</p>
+    </div>
+
+    <div class="analyze-layout">
+        <div class="upload-panel glass-card">
+            <div class="upload-zone" id="uploadZone">
+                <div class="upload-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </div>
+                <p class="upload-title">Drop image here</p>
+                <p class="upload-sub">or click to browse</p>
+                <p class="upload-hint">PNG, JPG, JPEG, WEBP, BMP · Max 10MB</p>
+                <input type="file" id="fileInput" accept="image/*" hidden>
+            </div>
+
+            <div class="preview-area" id="previewArea" style="display:none;">
+                <img id="previewImg" src="" alt="Preview" class="preview-img">
+                <button class="remove-btn" id="removeBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Remove
+                </button>
+            </div>
+
+            <button class="btn-primary btn-analyze" id="analyzeBtn" disabled>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                Analyze Image
+            </button>
+        </div>
+
+        <div class="results-panel" id="resultsPanel">
+            <div class="results-placeholder" id="resultsPlaceholder">
+                <div class="placeholder-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+                <p>Results will appear here after analysis</p>
+            </div>
+
+            <div class="loading-state" id="loadingState" style="display:none;">
+                <div class="loading-ring"></div>
+                <p class="loading-text">Analyzing image using computer vision pipeline...</p>
+                <div class="loading-steps">
+                    <div class="load-step active" id="step1">
+                        <span class="step-dot"></span> Loading image
+                    </div>
+                    <div class="load-step" id="step2">
+                        <span class="step-dot"></span> Running YOLOv8n inference
+                    </div>
+                    <div class="load-step" id="step3">
+                        <span class="step-dot"></span> Interpreting scene
+                    </div>
+                    <div class="load-step" id="step4">
+                        <span class="step-dot"></span> Generating output
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-content" id="resultsContent" style="display:none;">
+                <div class="result-images">
+                    <div class="img-compare">
+                        <div class="img-block">
+                            <span class="img-label">Original</span>
+                            <img id="inputImgResult" src="" alt="Original">
+                        </div>
+                        <div class="img-block">
+                            <span class="img-label">Detected</span>
+                            <img id="outputImgResult" src="" alt="Output">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-data">
+                    <div class="result-block glass-card">
+                        <h3 class="result-block-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                            Detected Objects
+                        </h3>
+                        <div id="objectsList" class="objects-list"></div>
+                    </div>
+
+                    <div class="result-block glass-card">
+                        <h3 class="result-block-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                            Scene Description
+                        </h3>
+                        <p id="sceneText" class="scene-text"></p>
+                    </div>
+
+                    <div class="result-block glass-card" id="relationsBlock">
+                        <h3 class="result-block-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                            Relationships
+                        </h3>
+                        <ul id="relationsList" class="relations-list"></ul>
+                    </div>
+
+                    <div class="result-block glass-card">
+                        <h3 class="result-block-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                            Insight
+                        </h3>
+                        <p id="insightText" class="insight-text"></p>
+                    </div>
+                </div>
+
+                <button class="btn-ghost btn-reset" id="resetBtn">Analyze Another Image</button>
+            </div>
+
+            <div class="error-state" id="errorState" style="display:none;">
+                <div class="error-icon">⚠</div>
+                <p id="errorText"></p>
+                <button class="btn-ghost" id="retryBtn">Try Again</button>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/analyze.js') }}"></script>
+{% endblock %}
